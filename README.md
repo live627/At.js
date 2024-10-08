@@ -19,6 +19,47 @@ http://ichord.github.com/At.js
 ### Documentation
 https://github.com/ichord/At.js/wiki
 
+Here is the conversion of the provided JavaScript code into an organized format, detailing the structure and key functions:
+
+### 1. **Api Object Definition**
+The `Api` object defines several key methods used in the code. Each method has a specific function that interacts with a controller or model.
+
+- **load(at, data)**: Loads data into the model for a specified controller.
+- **isSelecting()**: Checks if the view is visible and returns `true` if it is, otherwise returns `false`.
+- **hide()**: Hides the view of the controller.
+- **reposition()**: Repositions the view based on the rectangle (`rect`) of the controller.
+- **setIframe(iframe, asRoot)**: Sets up the root element for the iframe.
+- **run()**: Dispatches an event or action.
+- **destroy()**: Shuts down the controller and removes the `atwho` data from the input element.
+
+### 2. **jQuery Plugin - atwho**
+The `$.fn.atwho` function is the main method for interacting with the `atwho` plugin. It supports various operations based on the method passed to it.
+
+- **Method Behavior**:
+  1. The function filters elements like `textarea`, `input`, or contenteditable elements.
+  2. If the method is an object, it registers a new `App` instance.
+  3. If the method exists in the `Api` object, it applies that method.
+  4. If the method does not exist, it triggers an error.
+
+### 3. **Default Settings**
+The default settings for the `atwho` plugin are defined as follows:
+
+- **at**: The trigger character for autocomplete (e.g., `@`).
+- **alias**: Optional alias for the trigger.
+- **data**: The data source for suggestions.
+- **displayTpl**: Template for how each suggestion is displayed (`<li>${name}</li>`).
+- **insertTpl**: Template for how the suggestion is inserted into the input field.
+- **headerTpl**: Optional template for headers in the suggestion list.
+- **callbacks**: Default callbacks used by the plugin.
+- **functionOverrides**: Allows overriding default functions.
+- **searchKey**: The key used for searching in the data (default is `"name"`).
+- **Various Behavioral Flags**: Flags that control specific behavior (e.g., `acceptSpaceBar`, `highlightFirst`).
+  
+### 4. **Debugging**
+The final line of the code defines the `debug` flag, allowing debug mode to be turned on or off for the `atwho` plugin.
+
+- **$.fn.atwho.debug = false**: Debugging is turned off by default.
+- 
 ### Compatibility
 
 * `textarea` - Chrome, Safari, Firefox, IE7+ (maybe IE6)
