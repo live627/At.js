@@ -62,18 +62,53 @@ atwho(input, {
 
 ## Configuration Options
 
-### Main Options
-| Option              | Type                      | Default           | Description                                                                 |
-|---------------------|---------------------------|-------------------|-----------------------------------------------------------------------------|
-| `at`                | `string`                 | `undefined`       | The trigger character to activate dropdown (e.g., `@`, `#`, etc.).         |
-| `alias`             | `string`                 | `undefined`       | Alias for the `at` trigger.                                                |
-| `data`              | `Array` or `string`      | `null`            | Source of suggestions (array or URL).                                      |
-| `displayTpl`        | `string` or `function`   | `${name}`         | Template for displaying items in the dropdown.                             |
-| `insertTpl`         | `string`                 | `${atwho-at}${name}` | Template for inserting the selected item into the input.                   |
-| `searchKey`         | `string`                 | `name`            | Key to search in data objects for matches.                                 |
-| `limit`             | `number`                 | `5`               | Maximum number of items to display.                                        |
-| `callbacks`         | `object`                 | `DEFAULT_CALLBACKS`| Customize data processing, filtering, and more.                            |
+# DEFAULT_SETTINGS Documentation
 
+The `DEFAULT_SETTINGS` object contains configurable options for the system, allowing developers to customize its behavior. Each setting is described below:
+
+| **Option**                    | **Type**                  | **Default**              | **Description**                                                                                   |
+|--------------------------------|---------------------------|--------------------------|---------------------------------------------------------------------------------------------------|
+| `at`                          | `string`      | `void 0`                | Character that triggers the observation (e.g., `@`).                                             |
+| `alias`                       | `string`      | `void 0`                | Alias name for the `at` trigger; also serves as the `id` attribute for the popup view.           |
+| `data`                        | `Array`\|`string`\|`null`       | `null`                  | Data source (array of items or a URL). If a URL, the system fetches JSON data remotely.          |
+| `headerTpl`                   | `string`                 | `""`                    | HTML template for rendering the top of the dropdown, commonly used for instructions or headings. |
+| `displayTpl`                  | `string`\|`function`       | `"${name}"`             | Template for rendering each item in the dropdown, allowing interpolation of data values.         |
+| `insertTpl`                   | `string`                 | `"${atwho-at}${name}"`  | Template for inserting selected items into the input field using placeholders like `${name}`.    |
+| `callbacks`                   | `Object`                 | `DEFAULT_CALLBACKS`     | Custom callback functions for data processing (e.g., filtering or formatting results).           |
+| `searchKey`                   | `string`                 | `"name"`                | Key in the data object to search and match against the user's query.                             |
+| `limit`                       | `number`                 | `5`                     | Maximum number of items displayed in the dropdown list.                                          |
+| `minLen`                      | `number`                 | `0`                     | Minimum length of the query string after the trigger character (`at`).                          |
+| `maxLen`                      | `number`                 | `20`                    | Maximum length of the query string after the trigger character (`at`).                          |
+| `startWithSpace`              | `boolean`                | `true`                  | If `true`, the `at` trigger must be preceded by a space in the input field.                     |
+| `displayTimeout`              | `number`                 | `300`                   | Time in milliseconds to keep the popup open after losing focus from the input field.            |
+| `highlightFirst`              | `boolean`                | `true`                  | If `true`, the first suggestion in the dropdown is automatically highlighted.                   |
+| `delay`                       | `number`\|`null`           | `null`                  | Delay time (in ms) before triggering the dropdown while typing.                                 |
+| `suffix`                      | `string`\|`undefined`      | `undefined`             | String appended after inserting a matched item.                                                 |
+| `lookUpOnClick`               | `boolean`                | `true`                  | If `true`, the dropdown will show on click without typing the suffix.                           |
+| `hideWithoutSuffix`           | `boolean`                | `false`                 | If `true`, the dropdown will not show unless the user types the suffix.                         |
+
+### Example Configuration
+
+Below is an example usage of `DEFAULT_SETTINGS` with custom values:
+
+```javascript
+const customSettings = {
+  at: '@',
+  alias: 'mention',
+  data: '/api/users',
+  headerTpl: '<div class="dropdown-header">Suggestions</div>',
+  displayTpl: '${name} - ${email}',
+  searchKey: 'name',
+  limit: 10,
+  startWithSpace: false,
+  displayTimeout: 500,
+  highlightFirst: false,
+  delay: 200,
+  suffix: ' ',
+  lookUpOnClick: true,
+};
+initializeMentionSystem(customSettings);
+```
 ---
 
 ## Keyboard Navigation
